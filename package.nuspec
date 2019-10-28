@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <!--*-->
+    <id>WinForms.Toolkits</id>
+    <!--*-->
+    <version>1.0.0</version>
+    <title>WinForms.Toolkits</title>
+    <!--*-->
+    <authors>Lnlxy</authors>
+    <owners>Lnlxy</owners>
+    <!--
+    <licenseUrl></licenseUrl>
+    <projectUrl></projectUrl>
+    <iconUrl></iconUrl>
+-->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <!--*-->
+    <description>快速方便的创建 MessageBox 提示框；支持修改按钮文本和指定按钮的返回值</description>
+    <!--*-->
+    <releaseNotes>快速方便的创建 MessageBox 提示框；支持修改按钮文本和指定按钮的返回值</releaseNotes>
+    <copyright>Copyright Lnlxy©  2019</copyright>
+    <tags>messagebox winforms</tags>
+    <dependencies>
+      <!--
+      <dependency id="SampleDependency" version="1.0" />
+-->
+    </dependencies>
+  </metadata>
+</package>
