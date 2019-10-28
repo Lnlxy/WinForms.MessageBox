@@ -5,7 +5,7 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Windows.Forms" #>
-<#@ output extension=".Behaviors.cs" #>
+<#@ output extension=".codetemplate.cs" #>
 using System;
 using System.Collections.Generic;
 using System.Linq;
