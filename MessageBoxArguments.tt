@@ -1,0 +1,138 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Windows.Forms" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Windows.Forms" #>
+<#@ output extension=".Behaviors.cs" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+<#    var keys=new string[]{"OK", "Yes", "No","Abort","Cancel","Retry","Ignore"};#>
+namespace System.Windows.Forms
+{
+    sealed partial class MessageBoxArguments
+    {
+        
+<#    foreach(var name in Enum.GetNames(typeof(MessageBoxButtons)))  {#>
+
+        /// <summary>
+        /// 将此实例转换为包含 <see cref="MessageBoxButtons.<#=            name #>"/> 操作的实例。
+        /// </summary>
+        /// <returns>返回 <see cref="I<#=            name#>Behavior"/> 实例。</returns>
+        public I<#=            name#>Behavior As<#=            name#>Behavior()
+        {
+            return new <#=            name#>Behavior(new MessageBoxBehavior(this));
+        }
+
+        /// <summary>
+        /// 将此实例转换为包含 <see cref="MessageBoxButtons.<#=            name #>"/> 操作的实例。
+        /// </summary>
+        /// <typeparam name="T">返回值的类型。</typeparam>
+        /// <returns>返回 <see cref="I<#=            name#>Behavior"/> 实例。</returns>
+        public I<#=            name#>Behavior<T> As<#=            name#>Behavior<T>()
+        {
+            return new <#=            name#>Behavior<T>(new MessageBoxBehavior(this));
+        }
+
+        /// <summary>
+        /// 定义一个包含 <see cref="MessageBoxButtons.<#=            name #>"/> 按钮的操作。
+        /// Implements the <see cref="MessageCollector.IMessageBoxBehavior" />
+        /// </summary>
+        /// <seealso cref="MessageCollector.IMessageBoxBehavior" />
+        public interface I<#=            name#>Behavior : IMessageBoxBehavior
+        {
+            <#        foreach (var key in keys){ #>
+            <#            if(name.IndexOf( key,StringComparison.Ordinal)>-1) {#>
+            /// <summary>
+            /// 指定当任意 <see cref="MessageBox"/>.Show 返回结果为 <see cref="DialogResult.<#=                    key #>"/> 时，执行的方法。
+            /// </summary>
+            /// <param name="Behavior">执行的方法。</param>
+            /// <returns>返回设置后的 <see cref="I<#=            name #>Behavior"/> 实例。</returns>
+            I<#=                    name#>Behavior On<#=                    key#>(Action action);
+            /// <summary>
+            /// 设置 <#=                    key#> 按钮显示的文本内容。
+            /// </summary>
+            /// <param name="text">文本内容。</param>
+            /// <returns>返回 <see cref="IOKBehavior"/> 实例。</returns>
+            I<#=                    name#>Behavior Set<#=                    key#>Text(string text);
+            <#            }}#>
+        }
+        /// <summary>
+        /// 定义一个包含 <see cref="MessageBoxButtons.<#=            name #>"/> 按钮，且返回指定类型 <typeparamref name="T"/> 值的操作。
+        /// Implements the <see cref="MessageCollector.IMessageBoxBehavior{T}" />
+        /// </summary>
+        /// <typeparam name="T">返回值的类型。</typeparam>
+        /// <seealso cref="MessageCollector.IMessageBoxBehavior{T}" />
+        public interface I<#=            name#>Behavior<T>:IMessageBoxBehavior<T>
+        { 
+            <#        foreach (var key in keys){ #>
+            <#            if(name.IndexOf( key,StringComparison.Ordinal)>-1) {#>
+            /// <summary>
+            /// 指定当任意 <see cref="MessageBox"/>.Show 返回结果为 <see cref="DialogResult.<#=                    key #>"/> 时，执行的方法。
+            /// </summary>
+            /// <param name="func">执行的方法。</param>
+            /// <returns>返回设置后的 <see cref="IOKBehavior&lt;T&gt;"/> 实例。</returns>
+            I<#=                    name#>Behavior<T> On<#=                    key#>(Func<T> func);
+            /// <summary>
+            /// 设置 <#=                    key#> 按钮显示的文本内容。
+            /// </summary>
+            /// <param name="text">文本内容。</param>
+            /// <returns>返回 <see cref="IOKBehavior&lt;T&gt;"/> 实例。</returns>
+            I<#=                    name#>Behavior<T> Set<#=                    key#>Text(string text);
+            <#            }}#>
+        }
+
+          class <#=            name#>Behavior: I<#=            name#>Behavior
+        {
+            private readonly MessageBoxBehavior behavior;
+            
+                public <#=            name#>Behavior(MessageBoxBehavior behavior){this.behavior=behavior;}
+            
+            <#        foreach (var key in keys){ #>
+            <#            if(name.IndexOf( key,StringComparison.OrdinalIgnoreCase)>-1) {#>
+                public  I<#=                    name#>Behavior On<#=                    key#>(Action action)
+                {
+                    behavior.Add(DialogResult.<#=                    key#>, action);
+                    return this;
+                }
+                public I<#=                    name#>Behavior Set<#=                    key#>Text(string text)
+                {
+                    behavior.AddText(DialogResult.<#=                    key#>, text);
+                    return this;
+                }
+            <#            }}#>
+                public void Show()
+                { 
+                    behavior.Invoke(MessageBoxButtons.<#=            name #>, null);
+                }
+        }
+        class <#=            name#>Behavior<T>:I<#=            name#>Behavior<T>
+        { 
+            private readonly MessageBoxBehavior behavior;
+            public <#=            name#>Behavior(MessageBoxBehavior behavior){this.behavior=behavior; }
+            <#        foreach (var key in keys){ #>
+            <#            if(name.IndexOf( key,StringComparison.OrdinalIgnoreCase)>-1) {#>
+                public  I<#=                    name#>Behavior<T> On<#=                    key#>(Func<T> func)
+                {
+                    behavior.Add(DialogResult.<#=                    key#>, func);
+                    return this;
+                }
+                public I<#=                    name#>Behavior<T> Set<#=                    key#>Text(string text)
+                {
+                    behavior.AddText(DialogResult.<#=                    key#>, text);
+                    return this;
+                }
+            <#            }}#>
+            public T Show()
+            {
+            return (T)behavior.Invoke(MessageBoxButtons.<#=            name #>, default);
+            }
+        }
+   <#    }#>
+    }
+}

@@ -1,0 +1,37 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Windows.Forms" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Windows.Forms" #>
+<#@ output extension=".codetemplate.cs" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace System.Windows.Forms
+{
+    partial class MessageBoxService
+    {
+<#foreach(var name in Enum.GetNames(typeof(MessageBoxIcon)))  {#>    
+
+        /// <summary>
+        ///  Create a <see cref="MessageBoxArguments"/> with <see cref="MessageBoxIcon.<#=name #>"/>.
+        /// </summary>
+        /// <param name="text">显示的文本信息。</param>
+        /// <returns>返回 <see cref="MessageBoxArguments"/> 实例。</returns>
+        public static MessageBoxArguments <#=            name #>(string text) => new MessageBoxArguments(text, string.Empty, MessageBoxIcon.<#=            name #>);
+    
+        /// <summary>
+        ///  Create a <see cref="MessageBoxArguments"/> with <see cref="MessageBoxIcon.<#=name #>"/>.
+        /// </summary>
+        /// <param name="text">显示的文本信息。</param>
+        /// <param name="title">显示的标题信息。</param>
+        /// <returns>返回 <see cref="MessageBoxArguments"/> 实例。</returns>
+        public static MessageBoxArguments <#=            name #>(string text, string title) => new MessageBoxArguments(text, title, MessageBoxIcon.<#=            name #>);<#    }#>
+    }
+}
