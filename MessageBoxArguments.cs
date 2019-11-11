@@ -163,6 +163,11 @@ namespace System.Windows.Forms
 
             private DialogResult ShowDialog(MessageBoxButtons buttons)
             {
+                if (!Application.RenderWithVisualStyles)
+                {
+                    Application.VisualStyleState = VisualStyles.VisualStyleState.ClientAndNonClientAreasEnabled;
+                    Application.EnableVisualStyles();
+                }
                 if (texts.Count > 0)
                 {
                     var hook = new CodeProject.Win32API.Hook.CbtHook();
@@ -250,11 +255,6 @@ namespace System.Windows.Forms
 
             private DialogResult ShowMessageBox(MessageBoxButtons buttons)
             {
-                if (Application.VisualStyleState != VisualStyles.VisualStyleState.ClientAndNonClientAreasEnabled)
-                {
-                    Application.VisualStyleState = VisualStyles.VisualStyleState.ClientAndNonClientAreasEnabled;
-                    Application.EnableVisualStyles();
-                }
                 if (arguments.owner is ISynchronizeInvoke synchronizeInvoke && synchronizeInvoke.InvokeRequired)
                 {
                     return (DialogResult)synchronizeInvoke.Invoke(new MethodInvoker(() => ShowDialog(buttons)), null);
