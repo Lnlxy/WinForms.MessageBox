@@ -108,7 +108,7 @@ namespace System.Windows.Forms
                 }
                                                                                                 public T Show()
             {
-            return (T)behavior.Invoke(MessageBoxButtons.OK, default);
+            return (T)behavior.Invoke(MessageBoxButtons.OK, default(T));
             }
         }
    
@@ -254,7 +254,7 @@ namespace System.Windows.Forms
                 }
                                                 public T Show()
             {
-            return (T)behavior.Invoke(MessageBoxButtons.OKCancel, default);
+            return (T)behavior.Invoke(MessageBoxButtons.OKCancel, default(T));
             }
         }
    
@@ -464,7 +464,7 @@ namespace System.Windows.Forms
                 }
                         public T Show()
             {
-            return (T)behavior.Invoke(MessageBoxButtons.AbortRetryIgnore, default);
+            return (T)behavior.Invoke(MessageBoxButtons.AbortRetryIgnore, default(T));
             }
         }
    
@@ -654,7 +654,7 @@ namespace System.Windows.Forms
                 }
                                                 public T Show()
             {
-            return (T)behavior.Invoke(MessageBoxButtons.YesNoCancel, default);
+            return (T)behavior.Invoke(MessageBoxButtons.YesNoCancel, default(T));
             }
         }
    
@@ -800,7 +800,7 @@ namespace System.Windows.Forms
                 }
                                                                         public T Show()
             {
-            return (T)behavior.Invoke(MessageBoxButtons.YesNo, default);
+            return (T)behavior.Invoke(MessageBoxButtons.YesNo, default(T));
             }
         }
    
@@ -946,7 +946,7 @@ namespace System.Windows.Forms
                 }
                                     public T Show()
             {
-            return (T)behavior.Invoke(MessageBoxButtons.RetryCancel, default);
+            return (T)behavior.Invoke(MessageBoxButtons.RetryCancel, default(T));
             }
         }
        }

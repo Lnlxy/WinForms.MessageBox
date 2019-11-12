@@ -130,7 +130,7 @@ namespace System.Windows.Forms
             <#            }}#>
             public T Show()
             {
-            return (T)behavior.Invoke(MessageBoxButtons.<#=            name #>, default);
+            return (T)behavior.Invoke(MessageBoxButtons.<#=            name #>, default(T));
             }
         }
    <#    }#>
